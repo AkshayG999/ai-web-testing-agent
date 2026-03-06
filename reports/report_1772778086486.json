@@ -1,0 +1,449 @@
+{
+  "baseUrl": "https://demo.gridbase.com/login",
+  "timestamp": "2026-03-06T06:21:26.486Z",
+  "summary": {
+    "total": 19,
+    "passed": 7,
+    "failed": 12,
+    "totalDurationMs": 298325,
+    "passRate": 37,
+    "pageCount": 3
+  },
+  "pages": [
+    {
+      "pageUrl": "https://demo.gridbase.com/roster/conversion/upload",
+      "pageTitle": "Roster - Gridbase System",
+      "scenarios": [
+        {
+          "name": "Verify initial UI state and headings",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "assert",
+              "selector": null,
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "assert",
+              "selector": "role:{\"role\":\"heading\",\"options\":{\"name\":\"Upload your roster files\",\"level\":2}}",
+              "success": false,
+              "error": "Element not visible: role"
+            }
+          ],
+          "status": "failed",
+          "durationMs": 1471,
+          "error": "Element not visible: role",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Verify_initial_UI_state_and_headings_1772777730919.png"
+        },
+        {
+          "name": "Verify tab navigation states",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "assert",
+              "selector": "role:{\"role\":\"tab\",\"options\":{\"name\":\"Conversion\"}}",
+              "success": false,
+              "error": "Element not checked"
+            }
+          ],
+          "status": "failed",
+          "durationMs": 1345,
+          "error": "Element not checked",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Verify_tab_navigation_states_1772777732248.png"
+        },
+        {
+          "name": "Verify template download links",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "assert",
+              "selector": "role:{\"role\":\"link\",\"options\":{\"name\":\"Subcontractor Template\"}}",
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "assert",
+              "selector": "role:{\"role\":\"link\",\"options\":{\"name\":\"Internal Template\"}}",
+              "success": true,
+              "error": null
+            }
+          ],
+          "status": "passed",
+          "durationMs": 1077,
+          "error": null,
+          "screenshot": null
+        },
+        {
+          "name": "Upload valid roster file",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "upload",
+              "selector": "input[type='file']",
+              "success": false,
+              "error": "ENOENT: no such file or directory, stat 'internal_roster_sample.xlsx'"
+            }
+          ],
+          "status": "failed",
+          "durationMs": 2106,
+          "error": "ENOENT: no such file or directory, stat 'internal_roster_sample.xlsx'",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Upload_valid_roster_file_1772777735431.png"
+        },
+        {
+          "name": "Verify breadcrumb navigation structure",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "assert",
+              "selector": "role:{\"role\":\"link\",\"options\":{\"name\":\"Upload\"}}",
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "assert",
+              "selector": "nav[aria-label='breadcrumb']",
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 2,
+              "action": "assert",
+              "selector": "nav[aria-label='breadcrumb']",
+              "success": true,
+              "error": null
+            }
+          ],
+          "status": "passed",
+          "durationMs": 1118,
+          "error": null,
+          "screenshot": null
+        },
+        {
+          "name": "Verify sidebar toggle functionality",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "click",
+              "selector": "role:{\"role\":\"button\",\"options\":{\"name\":\"Toggle Sidebar\"}}",
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "assert",
+              "selector": "role:{\"role\":\"img\",\"options\":{\"name\":\"Gridbase\"}}",
+              "success": true,
+              "error": null
+            }
+          ],
+          "status": "passed",
+          "durationMs": 1220,
+          "error": null,
+          "screenshot": null
+        },
+        {
+          "name": "Verify New File button navigation",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "click",
+              "selector": "role:{\"role\":\"link\",\"options\":{\"name\":\"New File New\"}}",
+              "success": false,
+              "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'New File New' })\u001b[22m\n"
+            }
+          ],
+          "status": "failed",
+          "durationMs": 92367,
+          "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'New File New' })\u001b[22m\n",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Verify_New_File_button_navigation_1772777830121.png"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://demo.gridbase.com/roster/history",
+      "pageTitle": "Roster - Gridbase System",
+      "scenarios": [
+        {
+          "name": "Verify Roster History page initial UI state",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "assert",
+              "selector": null,
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "assert",
+              "selector": "role:{\"role\":\"heading\",\"options\":{\"name\":\"Roster\"}}",
+              "success": false,
+              "error": "Element not visible: role"
+            }
+          ],
+          "status": "failed",
+          "durationMs": 1454,
+          "error": "Element not visible: role",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Verify_Roster_History_page_initial_UI_state_1772777864068.png"
+        },
+        {
+          "name": "Navigate to New File upload page",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "click",
+              "selector": "role:{\"role\":\"link\",\"options\":{\"name\":\"New File New\"}}",
+              "success": false,
+              "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'New File New' })\u001b[22m\n"
+            }
+          ],
+          "status": "failed",
+          "durationMs": 92291,
+          "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'New File New' })\u001b[22m\n",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Navigate_to_New_File_upload_page_1772777956367.png"
+        },
+        {
+          "name": "Switch to Conversion tab",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "click",
+              "selector": "role:{\"role\":\"tab\",\"options\":{\"name\":\"Conversion\"}}",
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "wait",
+              "selector": null,
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 2,
+              "action": "assert",
+              "selector": null,
+              "success": true,
+              "error": null
+            }
+          ],
+          "status": "passed",
+          "durationMs": 1365,
+          "error": null,
+          "screenshot": null
+        },
+        {
+          "name": "Toggle sidebar visibility",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "click",
+              "selector": "role:{\"role\":\"button\",\"options\":{\"name\":\"Toggle Sidebar\"}}",
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "screenshot",
+              "selector": null,
+              "success": true,
+              "error": null,
+              "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/step_1772777958868.png"
+            }
+          ],
+          "status": "passed",
+          "durationMs": 1147,
+          "error": null,
+          "screenshot": null
+        },
+        {
+          "name": "Verify disabled state of Templates tab",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "assert",
+              "selector": "role:{\"role\":\"tab\",\"options\":{\"name\":\"Templates\"}}",
+              "success": false,
+              "error": "Element not disabled"
+            }
+          ],
+          "status": "failed",
+          "durationMs": 1132,
+          "error": "Element not disabled",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Verify_disabled_state_of_Templates_tab_1772777960010.png"
+        },
+        {
+          "name": "Navigate to Events module via sidebar",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "click",
+              "selector": "text:{\"text\":\"Events\"}",
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "wait",
+              "selector": null,
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 2,
+              "action": "assert",
+              "selector": "role:{\"role\":\"tab\",\"options\":{\"name\":\"History\"}}",
+              "success": false,
+              "error": "Element not hidden: role"
+            }
+          ],
+          "status": "failed",
+          "durationMs": 1188,
+          "error": "Element not hidden: role",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Navigate_to_Events_module_via_sidebar_1772777961161.png"
+        }
+      ]
+    },
+    {
+      "pageUrl": "https://demo.gridbase.com/roster/templates",
+      "pageTitle": "Roster - Gridbase System",
+      "scenarios": [
+        {
+          "name": "Verify Roster Templates page UI elements and initial state",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "assert",
+              "selector": null,
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "assert",
+              "selector": "role:{\"role\":\"heading\",\"options\":{\"name\":\"Roster\"}}",
+              "success": false,
+              "error": "Element not visible: role"
+            }
+          ],
+          "status": "failed",
+          "durationMs": 1565,
+          "error": "Element not visible: role",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Verify_Roster_Templates_page_UI_elements_and_initi_1772777988765.png"
+        },
+        {
+          "name": "Navigate to New File upload page via primary action button",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "click",
+              "selector": "role:{\"role\":\"link\",\"options\":{\"name\":\"New File New\"}}",
+              "success": false,
+              "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'New File New' })\u001b[22m\n"
+            }
+          ],
+          "status": "failed",
+          "durationMs": 92381,
+          "error": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('link', { name: 'New File New' })\u001b[22m\n",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Navigate_to_New_File_upload_page_via_primary_actio_1772778081150.png"
+        },
+        {
+          "name": "Navigate to Conversion tab",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "click",
+              "selector": "role:{\"role\":\"tab\",\"options\":{\"name\":\"Conversion\"}}",
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "wait",
+              "selector": null,
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 2,
+              "action": "assert",
+              "selector": null,
+              "success": true,
+              "error": null
+            }
+          ],
+          "status": "passed",
+          "durationMs": 1827,
+          "error": null,
+          "screenshot": null
+        },
+        {
+          "name": "Verify History tab is disabled",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "assert",
+              "selector": "role:{\"role\":\"tab\",\"options\":{\"name\":\"History\"}}",
+              "success": false,
+              "error": "Element not disabled"
+            }
+          ],
+          "status": "failed",
+          "durationMs": 1004,
+          "error": "Element not disabled",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Verify_History_tab_is_disabled_1772778083976.png"
+        },
+        {
+          "name": "Toggle sidebar visibility",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "click",
+              "selector": "role:{\"role\":\"button\",\"options\":{\"name\":\"Toggle Sidebar\"}}",
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "assert",
+              "selector": "role:{\"role\":\"button\",\"options\":{\"name\":\"Toggle Sidebar\"}}",
+              "success": true,
+              "error": null
+            }
+          ],
+          "status": "passed",
+          "durationMs": 1163,
+          "error": null,
+          "screenshot": null
+        },
+        {
+          "name": "Verify sidebar navigation items are present",
+          "steps": [
+            {
+              "stepIndex": 0,
+              "action": "assert",
+              "selector": null,
+              "success": true,
+              "error": null
+            },
+            {
+              "stepIndex": 1,
+              "action": "assert",
+              "selector": null,
+              "success": false,
+              "error": "Page does not contain text \"Invoices\""
+            }
+          ],
+          "status": "failed",
+          "durationMs": 1104,
+          "error": "Page does not contain text \"Invoices\"",
+          "screenshot": "/Users/apple/Nirmitee/testing-automation/ai-web-tester/reports/screenshots/failure_Verify_sidebar_navigation_items_are_present_1772778086232.png"
+        }
+      ]
+    }
+  ]
+}

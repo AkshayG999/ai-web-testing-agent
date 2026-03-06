@@ -1,0 +1,26 @@
+{
+  "timeout": 30000,
+  "retries": 2,
+  "headless": true,
+  "tracing": true,
+  "recordVideo": false,
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "reportFormats": [
+    "html",
+    "json",
+    "cli"
+  ],
+  "ai": {
+    "provider": "google",
+    "model": "gemini-3-flash-preview",
+    "temperature": 0.2
+  },
+  "crawl": {
+    "enabled": true,
+    "maxPages": 5,
+    "maxDepth": 3
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "staging-login",
+  "auth": {
+    "loginUrl": "https://demo.gridbase.com/login",
+    "fields": {
+      "email": "gridbase@gmail.com",
+      "password": "gridbase"
+    }
+  }
+}

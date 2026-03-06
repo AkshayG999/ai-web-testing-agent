@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Web Tester Report</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; padding: 2rem; line-height: 1.6; }
+    .container { max-width: 1000px; margin: 0 auto; }
+    h1 { font-size: 1.75rem; margin-bottom: 0.5rem; color: #f1f5f9; }
+    .meta { color: #94a3b8; margin-bottom: 1.5rem; }
+    .meta strong { color: #cbd5e1; }
+    .summary { display: flex; gap: 1rem; margin-bottom: 2rem; flex-wrap: wrap; }
+    .summary-card { background: #1e293b; border: 1px solid #334155; border-radius: 10px; padding: 1rem 1.5rem; flex: 1; min-width: 120px; }
+    .summary-card .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; }
+    .summary-card .value { font-size: 1.75rem; font-weight: 700; color: #f1f5f9; }
+    .summary-card.pass-rate .value { color: #f87171; }
+
+    .page-section { margin-bottom: 2rem; }
+    .page-header { background: #1e293b; border: 1px solid #334155; border-radius: 10px 10px 0 0; padding: 1rem 1.25rem; margin-bottom: 0; }
+    .page-header h2 { font-size: 1.15rem; color: #f1f5f9; margin-bottom: 0.25rem; }
+    .page-header h2 a { color: #60a5fa; text-decoration: none; }
+    .page-header h2 a:hover { text-decoration: underline; }
+    .page-meta { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; }
+    .page-url { font-size: 0.8rem; color: #64748b; word-break: break-all; }
+    .page-stats { font-size: 0.8rem; color: #94a3b8; font-weight: 600; }
+
+    .scenario { background: #1e293b; border: 1px solid #334155; margin-top: -1px; padding: 1.25rem; }
+    .scenario:last-child { border-radius: 0 0 10px 10px; }
+    .scenario.passed { border-left: 4px solid #4ade80; }
+    .scenario.failed { border-left: 4px solid #f87171; }
+    .scenario-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
+    .scenario-header h4 { font-size: 1rem; color: #f1f5f9; }
+    .scenario-meta { display: flex; gap: 0.75rem; align-items: center; }
+    .badge { font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 4px; text-transform: uppercase; }
+    .badge.pass { background: #166534; color: #bbf7d0; }
+    .badge.fail { background: #991b1b; color: #fecaca; }
+    .duration { font-size: 0.8rem; color: #94a3b8; }
+    .scenario-error { background: #451a1a; color: #fca5a5; padding: 0.5rem 0.75rem; border-radius: 6px; font-size: 0.85rem; margin-bottom: 0.75rem; }
+    .steps { display: flex; flex-direction: column; gap: 0.3rem; }
+    .step { font-size: 0.85rem; padding: 0.35rem 0.5rem; border-radius: 4px; display: flex; align-items: baseline; gap: 0.5rem; flex-wrap: wrap; }
+    .step-pass { color: #86efac; }
+    .step-fail { color: #fca5a5; background: #2a1515; }
+    .step-icon { font-weight: bold; flex-shrink: 0; }
+    .step code { background: #334155; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.8rem; color: #93c5fd; }
+    .step-error { color: #fca5a5; font-size: 0.8rem; }
+    details { margin-top: 0.75rem; }
+    summary { cursor: pointer; color: #94a3b8; font-size: 0.85rem; }
+    details img { max-width: 100%; border-radius: 8px; margin-top: 0.5rem; border: 1px solid #334155; }
+    .trace-info { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 1rem; margin-top: 1.5rem; font-size: 0.85rem; color: #94a3b8; }
+    .trace-info code { background: #334155; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.8rem; color: #93c5fd; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AI Web Tester Report</h1>
+    <div class="meta">
+      <p><strong>Base URL:</strong> https://demo.gridbase.com/login</p>
+      <p><strong>Time:</strong> 2026-03-06T06:21:26.488Z</p>
+    </div>
+    <div class="summary">
+      <div class="summary-card"><div class="label">Pages</div><div class="value">3</div></div>
+      <div class="summary-card"><div class="label">Total</div><div class="value">19</div></div>
+      <div class="summary-card"><div class="label">Passed</div><div class="value" style="color:#4ade80">7</div></div>
+      <div class="summary-card"><div class="label">Failed</div><div class="value" style="color:#f87171">12</div></div>
+      <div class="summary-card pass-rate"><div class="label">Pass Rate</div><div class="value">37%</div></div>
+      <div class="summary-card"><div class="label">Duration</div><div class="value" style="font-size:1.25rem">298.3s</div></div>
+    </div>
+    <div class="page-section">
+      <div class="page-header">
+        <h2><a href="https://demo.gridbase.com/roster/conversion/upload" target="_blank">Roster - Gridbase System</a></h2>
+        <div class="page-meta">
+          <span class="page-url">https://demo.gridbase.com/roster/conversion/upload</span>
+          <span class="page-stats">3 passed / 4 failed</span>
+        </div>
+      </div>
+      <div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Verify initial UI state and headings</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">1.47s</span></div>
+        </div>
+        <div class="scenario-error">Element not visible: role</div>
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong>  </div><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;heading&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Upload your roster files&quot;,&quot;level&quot;:2}}</code> <span class="step-error">Element not visible: role</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Verify_initial_UI_state_and_headings_1772777730919.png" alt="screenshot" loading="lazy"/></details>
+      </div><div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Verify tab navigation states</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">1.34s</span></div>
+        </div>
+        <div class="scenario-error">Element not checked</div>
+        <div class="steps"><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;tab&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Conversion&quot;}}</code> <span class="step-error">Element not checked</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Verify_tab_navigation_states_1772777732248.png" alt="screenshot" loading="lazy"/></details>
+      </div><div class="scenario passed">
+        <div class="scenario-header">
+          <h4>Verify template download links</h4>
+          <div class="scenario-meta"><span class="badge pass">PASSED</span> <span class="duration">1.08s</span></div>
+        </div>
+        
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;link&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Subcontractor Template&quot;}}</code> </div><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;link&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Internal Template&quot;}}</code> </div></div>
+        
+      </div><div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Upload valid roster file</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">2.11s</span></div>
+        </div>
+        <div class="scenario-error">ENOENT: no such file or directory, stat 'internal_roster_sample.xlsx'</div>
+        <div class="steps"><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>upload</strong> <code>input[type='file']</code> <span class="step-error">ENOENT: no such file or directory, stat 'internal_roster_sample.xlsx'</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Upload_valid_roster_file_1772777735431.png" alt="screenshot" loading="lazy"/></details>
+      </div><div class="scenario passed">
+        <div class="scenario-header">
+          <h4>Verify breadcrumb navigation structure</h4>
+          <div class="scenario-meta"><span class="badge pass">PASSED</span> <span class="duration">1.12s</span></div>
+        </div>
+        
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;link&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Upload&quot;}}</code> </div><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong> <code>nav[aria-label='breadcrumb']</code> </div><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong> <code>nav[aria-label='breadcrumb']</code> </div></div>
+        
+      </div><div class="scenario passed">
+        <div class="scenario-header">
+          <h4>Verify sidebar toggle functionality</h4>
+          <div class="scenario-meta"><span class="badge pass">PASSED</span> <span class="duration">1.22s</span></div>
+        </div>
+        
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>click</strong> <code>role:{&quot;role&quot;:&quot;button&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Toggle Sidebar&quot;}}</code> </div><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;img&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Gridbase&quot;}}</code> </div></div>
+        
+      </div><div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Verify New File button navigation</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">92.37s</span></div>
+        </div>
+        <div class="scenario-error">locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('link', { name: 'New File New' })[22m
+</div>
+        <div class="steps"><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>click</strong> <code>role:{&quot;role&quot;:&quot;link&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;New File New&quot;}}</code> <span class="step-error">locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('link', { name: 'New File New' })[22m
+</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Verify_New_File_button_navigation_1772777830121.png" alt="screenshot" loading="lazy"/></details>
+      </div>
+    </div><div class="page-section">
+      <div class="page-header">
+        <h2><a href="https://demo.gridbase.com/roster/history" target="_blank">Roster - Gridbase System</a></h2>
+        <div class="page-meta">
+          <span class="page-url">https://demo.gridbase.com/roster/history</span>
+          <span class="page-stats">2 passed / 4 failed</span>
+        </div>
+      </div>
+      <div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Verify Roster History page initial UI state</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">1.45s</span></div>
+        </div>
+        <div class="scenario-error">Element not visible: role</div>
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong>  </div><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;heading&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Roster&quot;}}</code> <span class="step-error">Element not visible: role</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Verify_Roster_History_page_initial_UI_state_1772777864068.png" alt="screenshot" loading="lazy"/></details>
+      </div><div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Navigate to New File upload page</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">92.29s</span></div>
+        </div>
+        <div class="scenario-error">locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('link', { name: 'New File New' })[22m
+</div>
+        <div class="steps"><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>click</strong> <code>role:{&quot;role&quot;:&quot;link&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;New File New&quot;}}</code> <span class="step-error">locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('link', { name: 'New File New' })[22m
+</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Navigate_to_New_File_upload_page_1772777956367.png" alt="screenshot" loading="lazy"/></details>
+      </div><div class="scenario passed">
+        <div class="scenario-header">
+          <h4>Switch to Conversion tab</h4>
+          <div class="scenario-meta"><span class="badge pass">PASSED</span> <span class="duration">1.36s</span></div>
+        </div>
+        
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>click</strong> <code>role:{&quot;role&quot;:&quot;tab&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Conversion&quot;}}</code> </div><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>wait</strong>  </div><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong>  </div></div>
+        
+      </div><div class="scenario passed">
+        <div class="scenario-header">
+          <h4>Toggle sidebar visibility</h4>
+          <div class="scenario-meta"><span class="badge pass">PASSED</span> <span class="duration">1.15s</span></div>
+        </div>
+        
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>click</strong> <code>role:{&quot;role&quot;:&quot;button&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Toggle Sidebar&quot;}}</code> </div><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>screenshot</strong>  </div></div>
+        
+      </div><div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Verify disabled state of Templates tab</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">1.13s</span></div>
+        </div>
+        <div class="scenario-error">Element not disabled</div>
+        <div class="steps"><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;tab&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Templates&quot;}}</code> <span class="step-error">Element not disabled</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Verify_disabled_state_of_Templates_tab_1772777960010.png" alt="screenshot" loading="lazy"/></details>
+      </div><div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Navigate to Events module via sidebar</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">1.19s</span></div>
+        </div>
+        <div class="scenario-error">Element not hidden: role</div>
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>click</strong> <code>text:{&quot;text&quot;:&quot;Events&quot;}</code> </div><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>wait</strong>  </div><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;tab&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;History&quot;}}</code> <span class="step-error">Element not hidden: role</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Navigate_to_Events_module_via_sidebar_1772777961161.png" alt="screenshot" loading="lazy"/></details>
+      </div>
+    </div><div class="page-section">
+      <div class="page-header">
+        <h2><a href="https://demo.gridbase.com/roster/templates" target="_blank">Roster - Gridbase System</a></h2>
+        <div class="page-meta">
+          <span class="page-url">https://demo.gridbase.com/roster/templates</span>
+          <span class="page-stats">2 passed / 4 failed</span>
+        </div>
+      </div>
+      <div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Verify Roster Templates page UI elements and initial state</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">1.56s</span></div>
+        </div>
+        <div class="scenario-error">Element not visible: role</div>
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong>  </div><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;heading&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Roster&quot;}}</code> <span class="step-error">Element not visible: role</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Verify_Roster_Templates_page_UI_elements_and_initi_1772777988765.png" alt="screenshot" loading="lazy"/></details>
+      </div><div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Navigate to New File upload page via primary action button</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">92.38s</span></div>
+        </div>
+        <div class="scenario-error">locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('link', { name: 'New File New' })[22m
+</div>
+        <div class="steps"><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>click</strong> <code>role:{&quot;role&quot;:&quot;link&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;New File New&quot;}}</code> <span class="step-error">locator.click: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('link', { name: 'New File New' })[22m
+</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Navigate_to_New_File_upload_page_via_primary_actio_1772778081150.png" alt="screenshot" loading="lazy"/></details>
+      </div><div class="scenario passed">
+        <div class="scenario-header">
+          <h4>Navigate to Conversion tab</h4>
+          <div class="scenario-meta"><span class="badge pass">PASSED</span> <span class="duration">1.83s</span></div>
+        </div>
+        
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>click</strong> <code>role:{&quot;role&quot;:&quot;tab&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Conversion&quot;}}</code> </div><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>wait</strong>  </div><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong>  </div></div>
+        
+      </div><div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Verify History tab is disabled</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">1.00s</span></div>
+        </div>
+        <div class="scenario-error">Element not disabled</div>
+        <div class="steps"><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;tab&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;History&quot;}}</code> <span class="step-error">Element not disabled</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Verify_History_tab_is_disabled_1772778083976.png" alt="screenshot" loading="lazy"/></details>
+      </div><div class="scenario passed">
+        <div class="scenario-header">
+          <h4>Toggle sidebar visibility</h4>
+          <div class="scenario-meta"><span class="badge pass">PASSED</span> <span class="duration">1.16s</span></div>
+        </div>
+        
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>click</strong> <code>role:{&quot;role&quot;:&quot;button&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Toggle Sidebar&quot;}}</code> </div><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong> <code>role:{&quot;role&quot;:&quot;button&quot;,&quot;options&quot;:{&quot;name&quot;:&quot;Toggle Sidebar&quot;}}</code> </div></div>
+        
+      </div><div class="scenario failed">
+        <div class="scenario-header">
+          <h4>Verify sidebar navigation items are present</h4>
+          <div class="scenario-meta"><span class="badge fail">FAILED</span> <span class="duration">1.10s</span></div>
+        </div>
+        <div class="scenario-error">Page does not contain text &quot;Invoices&quot;</div>
+        <div class="steps"><div class="step step-pass"><span class="step-icon">&#10003;</span> <strong>assert</strong>  </div><div class="step step-fail"><span class="step-icon">&#10007;</span> <strong>assert</strong>  <span class="step-error">Page does not contain text &quot;Invoices&quot;</span></div></div>
+        <details><summary>Failure Screenshot</summary><img src="screenshots/failure_Verify_sidebar_navigation_items_are_present_1772778086232.png" alt="screenshot" loading="lazy"/></details>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

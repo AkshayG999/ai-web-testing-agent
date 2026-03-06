@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Web Tester</title>
+  <link rel="stylesheet" href="/css/styles.css"/>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <span class="brand-icon">&#9881;</span>
+        <span class="brand-text">AI Web Tester</span>
+      </div>
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-view="run">
+          <span class="nav-icon">&#9654;</span> New Run
+        </button>
+        <button class="nav-btn" data-view="profiles">
+          <span class="nav-icon">&#128100;</span> Test Data
+        </button>
+        <button class="nav-btn" data-view="history">
+          <span class="nav-icon">&#128196;</span> History
+        </button>
+        <button class="nav-btn" data-view="reports">
+          <span class="nav-icon">&#128202;</span> Reports
+        </button>
+        <button class="nav-btn" data-view="settings">
+          <span class="nav-icon">&#9881;</span> Settings
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <div id="statusIndicator" class="status-dot idle"></div>
+        <span id="statusText">Idle</span>
+      </div>
+    </aside>
+
+    <main class="content">
+
+      <!-- NEW RUN VIEW -->
+      <section id="view-run" class="view active">
+        <h1>New Test Run</h1>
+        <div class="run-form card">
+          <div class="form-group">
+            <label for="urlInput">Target URL</label>
+            <div class="input-row">
+              <input type="url" id="urlInput" placeholder="https://example.com" autocomplete="url"/>
+              <button id="btnStart" class="btn btn-primary">Start Run</button>
+              <button id="btnAbort" class="btn btn-danger" style="display:none">Abort</button>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:0.75rem">
+            <label for="profileSelect">Test Data Profile</label>
+            <select id="profileSelect">
+              <option value="">None (AI will generate test data)</option>
+            </select>
+          </div>
+          <details class="run-overrides">
+            <summary>Override settings for this run</summary>
+            <div class="override-grid">
+              <div class="form-group">
+                <label for="overCrawl">Crawl routes</label>
+                <select id="overCrawl"><option value="">Use default</option><option value="true">Enabled</option><option value="false">Disabled</option></select>
+              </div>
+              <div class="form-group">
+                <label for="overMaxPages">Max pages</label>
+                <input type="number" id="overMaxPages" min="1" max="100" placeholder="default"/>
+              </div>
+              <div class="form-group">
+                <label for="overHeadless">Headless</label>
+                <select id="overHeadless"><option value="">Use default</option><option value="true">Yes</option><option value="false">No</option></select>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <div id="progressPanel" class="card" style="display:none">
+          <div class="progress-header">
+            <h2 id="progressTitle">Initialising...</h2>
+            <div id="progressBar" class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+          </div>
+          <div id="routesList" class="routes-list" style="display:none">
+            <h3>Discovered Routes</h3>
+            <ul id="routesUl"></ul>
+          </div>
+          <div id="scenarioResults" class="scenario-results"></div>
+          <div id="logPanel" class="log-panel">
+            <div class="log-header">
+              <h3>Live Log</h3>
+              <button id="btnClearLog" class="btn btn-sm">Clear</button>
+            </div>
+            <pre id="logOutput"></pre>
+          </div>
+        </div>
+
+        <div id="summaryPanel" class="card summary-card" style="display:none">
+          <h2>Run Complete</h2>
+          <div class="summary-grid" id="summaryGrid"></div>
+          <div class="summary-actions" id="summaryActions"></div>
+        </div>
+      </section>
+
+      <!-- TEST DATA PROFILES VIEW -->
+      <section id="view-profiles" class="view">
+        <div class="view-header-row">
+          <h1>Test Data Profiles</h1>
+          <button id="btnNewProfile" class="btn btn-primary">+ New Profile</button>
+        </div>
+        <div id="profilesList" class="profiles-list">
+          <p class="muted">Loading...</p>
+        </div>
+
+        <!-- Profile editor (hidden by default) -->
+        <div id="profileEditor" class="card profile-editor" style="display:none">
+          <h2 id="profileEditorTitle">New Profile</h2>
+          <input type="hidden" id="peId"/>
+
+          <div class="form-group">
+            <label for="peName">Profile Name</label>
+            <input type="text" id="peName" placeholder="e.g. Staging Admin"/>
+          </div>
+
+          <fieldset>
+            <legend>Authentication (optional)</legend>
+            <p class="field-hint">If the site requires login, provide credentials here. The system will log in before testing.</p>
+            <div class="settings-grid">
+              <div class="form-group" style="grid-column: 1 / -1">
+                <label for="peAuthUrl">Login URL</label>
+                <input type="text" id="peAuthUrl" placeholder="https://example.com/login or /login"/>
+              </div>
+            </div>
+            <div class="kv-section" id="authFieldsSection">
+              <label class="kv-label">Login Fields</label>
+              <p class="field-hint">Field hint = label, placeholder, name, id, or type (e.g. "Email", "password")</p>
+              <div id="authFieldsContainer"></div>
+              <button type="button" class="btn btn-sm btn-add-row" data-target="authFieldsContainer">+ Add Field</button>
+            </div>
+            <div class="settings-grid" style="margin-top:0.75rem">
+              <div class="form-group">
+                <label for="peSuccessType">Success Check</label>
+                <select id="peSuccessType">
+                  <option value="">Auto (wait for navigation)</option>
+                  <option value="url_contains">URL contains</option>
+                  <option value="url_equals">URL equals</option>
+                  <option value="element_visible">Element visible</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="peSuccessValue">Success Value</label>
+                <input type="text" id="peSuccessValue" placeholder="e.g. /dashboard or .welcome-msg"/>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Global Test Data</legend>
+            <p class="field-hint">Key-value pairs available to the AI for all pages (e.g. email, password, userName).</p>
+            <div id="globalDataContainer"></div>
+            <button type="button" class="btn btn-sm btn-add-row" data-target="globalDataContainer">+ Add Field</button>
+          </fieldset>
+
+          <fieldset>
+            <legend>Page-Specific Data</legend>
+            <p class="field-hint">Data for specific URL paths. The key is the path pattern (e.g. "/register"), values are field-value pairs.</p>
+            <div id="pageDataContainer"></div>
+            <button type="button" id="btnAddPageData" class="btn btn-sm">+ Add Page</button>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="button" id="btnSaveProfile" class="btn btn-primary">Save Profile</button>
+            <button type="button" id="btnCancelProfile" class="btn btn-outline">Cancel</button>
+            <span id="profileSaved" class="save-msg" style="display:none">Saved!</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- HISTORY VIEW -->
+      <section id="view-history" class="view">
+        <h1>Run History</h1>
+        <div id="historyList" class="history-list">
+          <p class="muted">No runs yet. Start a test run to see history.</p>
+        </div>
+      </section>
+
+      <!-- REPORTS VIEW -->
+      <section id="view-reports" class="view">
+        <h1>Reports</h1>
+        <div id="reportsList" class="reports-list">
+          <p class="muted">Loading...</p>
+        </div>
+      </section>
+
+      <!-- SETTINGS VIEW -->
+      <section id="view-settings" class="view">
+        <h1>Settings</h1>
+        <form id="settingsForm" class="settings-form card">
+          <fieldset>
+            <legend>General</legend>
+            <div class="settings-grid">
+              <div class="form-group">
+                <label for="sTimeout">Timeout (ms)</label>
+                <input type="number" id="sTimeout" min="5000" step="1000"/>
+              </div>
+              <div class="form-group">
+                <label for="sRetries">Retries</label>
+                <input type="number" id="sRetries" min="0" max="10"/>
+              </div>
+              <div class="form-group">
+                <label for="sHeadless">Headless</label>
+                <select id="sHeadless"><option value="true">Yes</option><option value="false">No</option></select>
+              </div>
+              <div class="form-group">
+                <label for="sTracing">Tracing</label>
+                <select id="sTracing"><option value="true">Yes</option><option value="false">No</option></select>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>AI Provider</legend>
+            <div class="settings-grid">
+              <div class="form-group">
+                <label for="sProvider">Provider</label>
+                <select id="sProvider"></select>
+              </div>
+              <div class="form-group">
+                <label for="sModel">Model</label>
+                <input type="text" id="sModel"/>
+              </div>
+              <div class="form-group">
+                <label for="sTemp">Temperature</label>
+                <input type="number" id="sTemp" min="0" max="2" step="0.1"/>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>Route Crawling</legend>
+            <div class="settings-grid">
+              <div class="form-group">
+                <label for="sCrawlEnabled">Enabled</label>
+                <select id="sCrawlEnabled"><option value="true">Yes</option><option value="false">No</option></select>
+              </div>
+              <div class="form-group">
+                <label for="sCrawlMax">Max pages</label>
+                <input type="number" id="sCrawlMax" min="1" max="200"/>
+              </div>
+              <div class="form-group">
+                <label for="sCrawlDepth">Max depth</label>
+                <input type="number" id="sCrawlDepth" min="1" max="10"/>
+              </div>
+            </div>
+          </fieldset>
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Settings</button>
+            <span id="settingsSaved" class="save-msg" style="display:none">Saved!</span>
+          </div>
+        </form>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -31,7 +31,20 @@ cp .env.example .env
 node main.js https://example.com
 ```
 
-Expected output:
+**Web dashboard**
+
+Run the API and the React UI in **two separate terminals**.
+
+| Terminal | Command | URL |
+|----------|---------|-----|
+| 1 (API) | `npm run web` | http://localhost:3000 |
+| 2 (UI) | `cd web/dashboard && npm run dev` | http://localhost:5173 |
+
+Use the UI at http://localhost:5173. See `web/dashboard/README.md` for details.
+
+---
+
+Expected CLI output:
 
 ```
 Scanning website...

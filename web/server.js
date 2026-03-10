@@ -15,7 +15,11 @@ const server = http.createServer(app);
 const io = new SocketServer(server);
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve React dashboard build if available, otherwise fall back to public/
+const dashboardDist = path.join(__dirname, 'dashboard', 'dist');
+const staticDir = fs.existsSync(dashboardDist) ? dashboardDist : path.join(__dirname, 'public');
+app.use(express.static(staticDir));
 app.use('/reports', express.static(path.resolve(__dirname, '..', 'reports')));
 
 const configPath = path.join(__dirname, '..', 'config', 'settings.json');
@@ -173,6 +177,16 @@ app.post('/api/abort', (req, res) => {
     res.json({ ok: true });
   } else {
     res.json({ ok: false, message: 'No run in progress' });
+  }
+});
+
+// ── SPA Fallback ────────────────────────────────────
+app.get('/{*path}', (req, res) => {
+  const indexPath = path.join(staticDir, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).send('Not found');
   }
 });
 
